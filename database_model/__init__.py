@@ -1,0 +1,1 @@
+default_app_config = 'weather_shared_model.database_model.apps.DatabaseModelConfig'
