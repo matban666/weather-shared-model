@@ -1,10 +1,11 @@
 from django.db import models
 
-class WeatherForecast(models.Model):
+class ModelRunDate(models.Model): # was ModelRunDate
     model_run_date = models.DateTimeField(verbose_name="Model Run Date")
 
-class WeatherTimeSeries(models.Model):
-    forecast = models.ForeignKey(WeatherForecast, on_delete=models.CASCADE, related_name="time_series")
+
+class Details(models.Model): # Was Details
+    model_run_date = models.ForeignKey(ModelRunDate, on_delete=models.CASCADE, related_name="time_series")
     time = models.DateTimeField()
     screen_temperature = models.FloatField(verbose_name="Screen Temperature")
     max_screen_air_temp = models.FloatField(verbose_name="Max Screen Air Temp", null=True)
@@ -24,3 +25,4 @@ class WeatherTimeSeries(models.Model):
     total_precip_amount = models.IntegerField(verbose_name="Total Precipitation Amount", null=True)
     total_snow_amount = models.IntegerField(verbose_name="Total Snow Amount", null=True)
     prob_of_precipitation = models.IntegerField(verbose_name="Probability of Precipitation")
+    

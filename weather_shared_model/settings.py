@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import decouple
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'weather_shared_model.database_model',
+    'weather_forecast',
 ]
 
 MIDDLEWARE = [
@@ -77,10 +78,19 @@ WSGI_APPLICATION = 'weather_shared_model.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+print("DATABASE_ENGINE:", os.getenv('DATABASE_ENGINE'))  # Debugging
+print("DATABASE_NAME:", os.getenv('DATABASE_NAME'))   # Debugging
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': decouple.config('DATABASE_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': decouple.config('DATABASE_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': decouple.config('DATABASE_USER'),
+        'PASSWORD': decouple.config('DATABASE_PASSWORD'),
+        'HOST': decouple.config('DATABASE_HOST'),
+        'PORT': decouple.config('DATABASE_PORT'),
     }
 }
 
